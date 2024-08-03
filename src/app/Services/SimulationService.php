@@ -2,10 +2,17 @@
 
 namespace App\Services;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class SimulationService
 {
-    public function simulate(): void
+    public function __construct(private readonly AttackService $attackService)
     {
-        // Simulate the fixtures
+        //
+    }
+
+    public function simulate(Collection $fixtures)
+    {
+        $distributeAttacksToTeams = $this->attackService->distributeAttacksToTeamsWithScores($fixtures);
     }
 }

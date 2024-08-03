@@ -33,6 +33,12 @@ class SimulationController extends Controller
 
     public function simulate()
     {
+        // dto ?
+        $simulationData = $this->simulationService->simulate(
+            $this->fixtureRepository->getAll()->loadMissing('homeTeam.players', 'awayTeam.players'),
+        );
+        dd($simulationData);
+
         return response()->json([
             'message' => 'Simulation completed',
         ]);
