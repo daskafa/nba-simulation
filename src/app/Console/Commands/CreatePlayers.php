@@ -29,24 +29,34 @@ class CreatePlayers extends Command
     {
         $teams = Team::all();
 
-        $playersArray = [];
+        $preparedPlayers = [];
         foreach ($teams as $team) {
-            $players = [
-                ['name' => fake()->name, 'power' => random_int(1, 10)],
-                ['name' => fake()->name, 'power' => random_int(1, 10)],
-                ['name' => fake()->name, 'power' => random_int(1, 10)],
-                ['name' => fake()->name, 'power' => random_int(1, 10)],
-                ['name' => fake()->name, 'power' => random_int(1, 10)],
-            ];
-
-            foreach ($players as $player) {
-                $player['team_id'] = $team->id;
-                $playersArray[] = $player;
-            }
+            $preparedPlayers = $this->preparedPlayers($this->getPlayers(), $team, $preparedPlayers);
         }
 
-        Player::insert($playersArray);
+        Player::insert($preparedPlayers);
 
         $this->info('Players created successfully');
+    }
+
+    private function getPlayers(): array
+    {
+        return [
+            ['name' => fake()->name, 'power' => random_int(1, 10)],
+            ['name' => fake()->name, 'power' => random_int(1, 10)],
+            ['name' => fake()->name, 'power' => random_int(1, 10)],
+            ['name' => fake()->name, 'power' => random_int(1, 10)],
+            ['name' => fake()->name, 'power' => random_int(1, 10)],
+        ];
+    }
+
+    private function preparedPlayers(array $players, Team $team, array $preparedPlayers): array
+    {
+        foreach ($players as $player) {
+            $player['team_id'] = $team->id;
+            $preparedPlayers[] = $player;
+        }
+
+        return $preparedPlayers;
     }
 }

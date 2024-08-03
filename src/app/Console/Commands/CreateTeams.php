@@ -49,9 +49,9 @@ class CreateTeams extends Command
             'Sacramento Kings',
         ];
 
-        $teams = array_map(fn($teamName) => ['name' => $teamName], $teamsNames);
-
-        Team::insert($teams);
+        Team::insert(
+            array_map(fn($teamName) => ['name' => $teamName], $teamsNames)
+        );
 
         $this->info('Teams created successfully');
     }
