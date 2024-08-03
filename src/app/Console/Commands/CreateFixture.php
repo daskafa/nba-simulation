@@ -34,7 +34,7 @@ class CreateFixture extends Command
 
         Fixture::insert($fixtures);
 
-        $this->info('First week fixtures created successfully');
+        $this->info('>>> First week fixtures created successfully.');
     }
 
     private function generateFixtures(Collection $teams): array

@@ -53,6 +53,6 @@ class CreateTeams extends Command
             array_map(fn($teamName) => ['name' => $teamName], $teamsNames)
         );
 
-        $this->info('Teams created successfully');
+        $this->info('>>> Teams created successfully.');
     }
 }

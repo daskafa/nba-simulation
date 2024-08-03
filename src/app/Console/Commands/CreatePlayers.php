@@ -36,7 +36,7 @@ class CreatePlayers extends Command
 
         Player::insert($preparedPlayers);
 
-        $this->info('Players created successfully');
+        $this->info('>>> Players created successfully.');
     }
 
     private function getPlayers(): array
