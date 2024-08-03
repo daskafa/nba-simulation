@@ -28,16 +28,16 @@ class CreateFixture extends Command
      */
     public function handle()
     {
-        $teams = Team::all();
-
-        $fixtures = $this->generateFixtures($teams);
+        $fixtures = $this->generateFixture(
+            Team::all()
+        );
 
         Fixture::insert($fixtures);
 
         $this->info('>>> First week fixtures created successfully.');
     }
 
-    private function generateFixtures(Collection $teams): array
+    private function generateFixture(Collection $teams): array
     {
         $fixtures = [];
         $shuffledTeams = $teams->shuffle();

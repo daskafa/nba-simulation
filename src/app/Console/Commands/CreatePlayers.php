@@ -27,11 +27,9 @@ class CreatePlayers extends Command
      */
     public function handle()
     {
-        $teams = Team::all();
-
         $preparedPlayers = [];
-        foreach ($teams as $team) {
-            $preparedPlayers = $this->preparedPlayers($this->getPlayers(), $team, $preparedPlayers);
+        foreach (Team::all() as $team) {
+            $preparedPlayers = $this->preparePlayers($this->getPlayers(), $team, $preparedPlayers);
         }
 
         Player::insert($preparedPlayers);
@@ -50,7 +48,7 @@ class CreatePlayers extends Command
         ];
     }
 
-    private function preparedPlayers(array $players, Team $team, array $preparedPlayers): array
+    private function preparePlayers(array $players, Team $team, array $preparedPlayers): array
     {
         foreach ($players as $player) {
             $player['team_id'] = $team->id;
