@@ -23,13 +23,11 @@ class ScoreService
                 default => $score = 0,
             };
 
-            if ($score){
-                [$scorerRandomPlayer, $assistedRandomPlayer] = $this->playerService->getRandomPlayers($team);
-            }
+            [$randomPlayer, $assistedRandomPlayer] = $this->playerService->getRandomPlayers($team);
 
             $scores[] = [
-                'scorer_player' => $score ? $scorerRandomPlayer->name : null,
-                'assisted_player' => $score ? $assistedRandomPlayer->name : null,
+                'player_id' => $randomPlayer->id,
+                'assisted_player_id' => $score ? $assistedRandomPlayer->id : null,
                 'score' => $score,
             ];
         }

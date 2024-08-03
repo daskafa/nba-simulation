@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('player_stats', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedTinyInteger('player_id');
-            $table->boolean('is_assist');
+            $table->unsignedTinyInteger('assisted_player_id')->nullable();
             $table->unsignedSmallInteger('score');
 
             $table->foreign('player_id')->references('id')->on('players');
+            $table->foreign('assisted_player_id')->references('id')->on('players');
         });
     }
 

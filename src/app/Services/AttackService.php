@@ -36,7 +36,7 @@ class AttackService
         return min(rand(self::MIN_DURATION, self::MAX_DURATION), $totalTime);
     }
 
-    public function distributeAttacksToTeamsWithScores(Collection $fixtures) {
+    public function distributeAttacksToTeamsWithScores(Collection $fixtures): array {
         for($i = 0; $i < count($fixtures); $i++) {
             $homeTeam = $fixtures[$i]->homeTeam;
             $awayTeam = $fixtures[$i]->awayTeam;
@@ -67,6 +67,4 @@ class AttackService
 
         return array($homeTeamAttacks, $awayTeamAttacks);
     }
-
-
 }

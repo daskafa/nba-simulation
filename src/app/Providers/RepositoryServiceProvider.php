@@ -20,6 +20,16 @@ class RepositoryServiceProvider extends ServiceProvider
             \App\Interfaces\FixtureRepositoryInterface::class,
             \App\Repositories\FixtureRepository::class
         );
+
+        $this->app->bind(
+            \App\Interfaces\PlayerStatRepositoryInterface::class,
+            \App\Repositories\PlayerStatRepository::class
+        );
+
+        $this->app->bind(
+            \App\Interfaces\TeamStatRepositoryInterface::class,
+            \App\Repositories\TeamStatRepository::class
+        );
     }
 
     /**

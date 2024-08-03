@@ -37,7 +37,7 @@ class PrepareSimulation extends Command
             $this->call($command);
             $this->line('');
 
-            usleep(500000);
+            usleep(300000);
         }
     }
 }
