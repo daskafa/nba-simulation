@@ -19,7 +19,7 @@ docker-compose up -d
 ```
 
 #### Go to the src directory and create the .env file and add the information you specified in the docker-compose.yaml file to your file. (For example, your database information)
-### Enter MySQL IP Address in the .env file
+### Enter MySQL IP Address in the .env file.
 ```
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql
 ```
