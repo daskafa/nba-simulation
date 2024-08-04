@@ -6,12 +6,13 @@ use App\Interfaces\FixtureRepositoryInterface;
 use App\Services\CacheService;
 use App\Services\SimulationService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class SimulationController extends Controller
 {
-    private const MAX_UPDATE_COUNT = 3;
+    private const MAX_UPDATE_COUNT = 48;
 
     public function __construct(
         private readonly FixtureRepositoryInterface $fixtureRepository,
@@ -31,6 +32,9 @@ class SimulationController extends Controller
 
     public function simulation(): View
     {
+        if ($this->cacheService->getUpdateCount() === self::MAX_UPDATE_COUNT) {
+            Artisan::call('app:prepare-simulation');
+        }
 
         return view('simulation', [
             'fixture' => $this->fixtureRepository->getAll()->loadMissing('homeTeam.players', 'awayTeam.players'),
@@ -57,9 +61,11 @@ class SimulationController extends Controller
             DB::commit();
 
             return response()->json([
-                'simulationData' => $simulationData['simulationData'],
-                'playerStats' => $simulationData['playerStats'],
-                'successRates' => $simulationData['successRates'],
+                'data' => [
+                    'simulationData' => $simulationData['simulationData'],
+                    'playerStats' => $simulationData['playerStats'],
+                    'successRates' => $simulationData['successRates']
+                ],
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

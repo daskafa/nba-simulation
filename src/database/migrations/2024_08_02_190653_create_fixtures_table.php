@@ -15,8 +15,6 @@ return new class extends Migration
             $table->tinyIncrements('id');
             $table->unsignedTinyInteger('home_team_id');
             $table->unsignedTinyInteger('away_team_id');
-            $table->smallInteger('home_team_score')->nullable();
-            $table->smallInteger('away_team_score')->nullable();
 
             $table->foreign('home_team_id')->references('id')->on('teams');
             $table->foreign('away_team_id')->references('id')->on('teams');

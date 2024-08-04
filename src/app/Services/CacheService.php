@@ -10,7 +10,7 @@ class CacheService
     {
         $updateCount = Cache::get('updateCount');
 
-        Cache::put('updateCount', !$updateCount ? 1 : $updateCount + 1, 60);
+        Cache::put('updateCount', !$updateCount ? 1 : $updateCount + 1, 60 * 24);
     }
 
     public function getUpdateCount(): int
