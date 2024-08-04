@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('score');
 
             $table->foreign('team_id')->references('id')->on('teams');
+
+            $table->index('team_id');
         });
     }
 
