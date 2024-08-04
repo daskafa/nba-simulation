@@ -14,8 +14,9 @@ class LeagueTableController
         //
     }
 
-    public function getLeagueTable(): Collection
+    public function leagueTable(): Collection
     {
-        return $this->teamStatRepository->getAggregatedTeamStats();
+        return $this->teamStatRepository->getAggregatedTeamStatsWithTeam()
+            ->sortByDesc('total_score')->values();
     }
 }

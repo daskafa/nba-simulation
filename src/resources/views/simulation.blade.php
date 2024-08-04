@@ -1,27 +1,21 @@
 @extends('layouts.master')
 @section('content')
-    <div class="border mb-8 hidden" id="league-area">
-        <figure class="p-8 text-center bg-gray-50">
-            <blockquote class="max-w-2xl mx-auto text-gray-500">
-                <h3 class="text-2xl text-gray-700">
-                    NBA League Table
-                </h3>
-                <div class="mt-4">
-                    @foreach($fixture as $fixtureItem)
-                        <div class="grid grid-cols-3 mt-3">
-                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $fixtureItem->homeTeam->name }}</span>
-                            <span class="mx-2 italic">
-                                <span id="league-table-{{ $fixtureItem->homeTeam->id }}">0</span>
-                                -
-                                <span id="league-table-{{ $fixtureItem->awayTeam->id }}">0</span>
-                            </span>
-                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $fixtureItem->awayTeam->name }}</span>
-                        </div>
-                    @endforeach
-                </div>
-            </blockquote>
-        </figure>
+    <div class="league-area hidden relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Team Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Total Score
+                </th>
+            </tr>
+            </thead>
+            <tbody class="league-area-body"></tbody>
+        </table>
     </div>
+
     @foreach($fixture as $fixtureItem)
         <div class="p-6">
             <h5 class="mb-2 text-2xl font-bold tracking-tight dark:text-white text-center">
@@ -99,11 +93,27 @@
                         })
                             .then(response => response.json())
                             .then(data => {
-                                Object.keys(data).forEach(function (key) {
-                                    document.getElementById('league-table-' + data[key].team_id).innerText = data[key].total_score;
+                                const leagueAreaBody = document.getElementsByClassName('league-area-body')[0];
+
+                                Object.values(data).forEach(item => {
+                                    const tr = document.createElement('tr');
+                                    tr.className = 'odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700';
+
+                                    const th = document.createElement('th');
+                                    th.className = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
+                                    th.textContent = item.team.name;
+
+                                    const td = document.createElement('td');
+                                    td.className = 'px-6 py-4';
+                                    td.textContent = item.total_score;
+
+                                    tr.appendChild(th);
+                                    tr.appendChild(td);
+
+                                    leagueAreaBody.appendChild(tr);
                                 });
 
-                                document.getElementById('league-area').classList.remove('hidden');
+                                document.getElementsByClassName('league-area')[0].classList.remove('hidden');
 
                                 clearInterval(interval);
                             })
