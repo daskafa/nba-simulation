@@ -34,4 +34,13 @@ class ScoreService
 
         return $scores;
     }
+
+    public function calculateScore(int $homeTeamScore, int $awayTeamScore): int
+    {
+        if ($homeTeamScore > $awayTeamScore) {
+            return 2;
+        }
+
+        return 1;
+    }
 }

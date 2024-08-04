@@ -101,11 +101,11 @@
 
                                     const th = document.createElement('th');
                                     th.className = 'px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white';
-                                    th.textContent = item.team.name;
+                                    th.textContent = item.team;
 
                                     const td = document.createElement('td');
                                     td.className = 'px-6 py-4';
-                                    td.textContent = item.total_score;
+                                    td.textContent = item.score;
 
                                     tr.appendChild(th);
                                     tr.appendChild(td);

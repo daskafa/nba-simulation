@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\FixtureRepositoryInterface;
 use App\Services\CacheService;
+use App\Services\RecordService;
 use App\Services\SimulationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Artisan;
@@ -12,12 +13,13 @@ use Illuminate\View\View;
 
 class SimulationController extends Controller
 {
-    private const MAX_UPDATE_COUNT = 48;
+    private const MAX_UPDATE_COUNT = 3;
 
     public function __construct(
         private readonly FixtureRepositoryInterface $fixtureRepository,
         private readonly SimulationService $simulationService,
-        private readonly CacheService $cacheService
+        private readonly CacheService $cacheService,
+        private readonly RecordService $recordService,
     )
     {
         //
@@ -45,6 +47,8 @@ class SimulationController extends Controller
     {
         try {
             if ($this->cacheService->getUpdateCount() === self::MAX_UPDATE_COUNT) {
+                $this->recordService->recordScores();
+
                 return response()->json([
                     'message' => 'Simulation is over.'
                 ]);

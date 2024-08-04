@@ -18,4 +18,9 @@ class FixtureRepository implements FixtureRepositoryInterface
     {
         return self::query()->get();
     }
+
+    public function upsert(array $data, array $uniqueBy, array $update): void
+    {
+        Fixture::upsert($data, $uniqueBy, $update);
+    }
 }

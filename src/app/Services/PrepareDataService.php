@@ -6,7 +6,15 @@ use Illuminate\Support\Collection;
 
 class PrepareDataService
 {
-    public function prepareData(array $teamScores): Collection {
+    public function __construct(
+        private readonly ScoreService $scoreService
+    )
+    {
+        //
+    }
+
+    public function prepareData(array $teamScores): Collection
+    {
         $preparedArray = [];
 
         foreach ($teamScores as $teamScore) {
@@ -22,7 +30,8 @@ class PrepareDataService
         return collect($preparedArray);
     }
 
-    private function initializeTeamArray(array $scores): array {
+    private function initializeTeamArray(array $scores): array
+    {
         return [
             'attackCount' => count($scores),
             'totalScores' => 0,
@@ -30,7 +39,8 @@ class PrepareDataService
         ];
     }
 
-    private function calculateTotalScores(array $scores): int {
+    private function calculateTotalScores(array $scores): int
+    {
         $totalScores = 0;
         foreach ($scores as $score) {
             $totalScores += $score['score'];
@@ -39,7 +49,8 @@ class PrepareDataService
         return $totalScores;
     }
 
-    private function prepareDetailedScores(array $scores): array {
+    private function prepareDetailedScores(array $scores): array
+    {
         $detailed = [];
         foreach ($scores as $score) {
             $detailed[] = [
@@ -54,7 +65,7 @@ class PrepareDataService
 
     public function mappingForTeamStats(Collection $record): Collection
     {
-        return $record->map(function($teamData, $teamId) {
+        return $record->map(function ($teamData, $teamId) {
             return [
                 'team_id' => $teamId,
                 'attack_count' => $teamData['attackCount'],
@@ -65,8 +76,8 @@ class PrepareDataService
 
     public function mappingForPlayerStats(Collection $record): Collection
     {
-        return $record->map(function($teamData, $teamId) {
-            return collect($teamData['detailed'])->map(function($score) use ($teamId) {
+        return $record->map(function ($teamData, $teamId) {
+            return collect($teamData['detailed'])->map(function ($score) use ($teamId) {
                 return [
                     'player_id' => $score['player_id'],
                     'assisted_player_id' => $score['score'] ? $score['assisted_player_id'] : null,
@@ -98,5 +109,34 @@ class PrepareDataService
             $row->success_rate_3 = round($row->score_3_count / $row->total_attempts * 100);
             return $row;
         })->toArray();
+    }
+
+    public function mappingFixtureForScores(Collection $fixtures, Collection $aggregatedTeamStats): Collection
+    {
+        return $fixtures->map(function ($fixture) use ($aggregatedTeamStats) {
+            $homeTeam = $aggregatedTeamStats->get($fixture->home_team_id);
+            $awayTeam = $aggregatedTeamStats->get($fixture->away_team_id);
+
+            $homeScore = $this->scoreService->calculateScore($homeTeam->total_score, $awayTeam->total_score);
+            $awayScore = $this->scoreService->calculateScore($awayTeam->total_score, $homeTeam->total_score);
+
+            return [
+                'id' => $fixture->id,
+                'home_team_score' => $homeScore,
+                'away_team_score' => $awayScore,
+                'home_team_id' => $fixture->home_team_id,
+                'away_team_id' => $fixture->away_team_id,
+            ];
+        });
+    }
+
+    public function prepareLeagueTable(Collection $fixtures): Collection
+    {
+        return collect($fixtures)->flatMap(function ($match) {
+            return [
+                ['team' => $match->homeTeam->name, 'score' => $match->home_team_score],
+                ['team' => $match->awayTeam->name, 'score' => $match->away_team_score],
+            ];
+        })->sortByDesc('score')->values();
     }
 }

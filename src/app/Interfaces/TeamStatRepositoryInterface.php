@@ -12,6 +12,4 @@ interface TeamStatRepositoryInterface
     public function insert(array $data): bool;
 
     public function getAggregatedTeamStats(): Collection;
-
-    public function getAggregatedTeamStatsWithTeam(): Collection;
 }

@@ -2,13 +2,15 @@
 
 namespace App\Http\Api;
 
-use App\Interfaces\TeamStatRepositoryInterface;
+use App\Interfaces\FixtureRepositoryInterface;
+use App\Services\PrepareDataService;
 use Illuminate\Support\Collection;
 
 class LeagueTableController
 {
     public function __construct(
-        private readonly TeamStatRepositoryInterface $teamStatRepository
+        private readonly FixtureRepositoryInterface $fixtureRepository,
+        private readonly PrepareDataService $prepareDataService
     )
     {
         //
@@ -16,7 +18,8 @@ class LeagueTableController
 
     public function leagueTable(): Collection
     {
-        return $this->teamStatRepository->getAggregatedTeamStatsWithTeam()
-            ->sortByDesc('total_score')->values();
+        return $this->prepareDataService->prepareLeagueTable(
+            $this->fixtureRepository->getAll()->loadMissing('homeTeam', 'awayTeam')
+        );
     }
 }
