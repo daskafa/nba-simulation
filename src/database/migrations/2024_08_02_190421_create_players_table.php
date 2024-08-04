@@ -15,7 +15,6 @@ return new class extends Migration
             $table->tinyIncrements('id');
             $table->string('name');
             $table->unsignedTinyInteger('team_id');
-            $table->unsignedTinyInteger('power');
 
             $table->foreign('team_id')->references('id')->on('teams');
         });

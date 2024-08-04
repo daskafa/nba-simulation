@@ -116,22 +116,16 @@
                                 document.getElementsByClassName('league-area')[0].classList.remove('hidden');
 
                                 clearInterval(interval);
-                            })
-                            .catch(error => {
-                                console.log(error);
                             });
                     }
-                })
-                .catch(error => {
-                    console.log(error);
                 });
         }
 
-        let interval = setInterval(sendRequest, 2000);
+        let interval = setInterval(sendRequest, 5000);
 
         function updateSimulationData(data) {
             Object.keys(data).forEach(function (key) {
-                document.getElementById('team-' + data[key].team_id).innerText = data[key].total_scores;
+                document.getElementById('team-' + data[key].team_id).innerText = data[key].score;
                 document.getElementById('team-attack-count-' + data[key].team_id).innerText = data[key].attack_count;
             });
         }

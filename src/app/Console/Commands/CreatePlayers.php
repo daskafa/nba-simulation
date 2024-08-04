@@ -40,11 +40,11 @@ class CreatePlayers extends Command
     private function getPlayers(): array
     {
         return [
-            ['name' => fake()->name, 'power' => random_int(1, 10)],
-            ['name' => fake()->name, 'power' => random_int(1, 10)],
-            ['name' => fake()->name, 'power' => random_int(1, 10)],
-            ['name' => fake()->name, 'power' => random_int(1, 10)],
-            ['name' => fake()->name, 'power' => random_int(1, 10)],
+            ['name' => fake()->name],
+            ['name' => fake()->name],
+            ['name' => fake()->name],
+            ['name' => fake()->name],
+            ['name' => fake()->name],
         ];
     }
 

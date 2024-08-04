@@ -13,7 +13,7 @@ use Illuminate\View\View;
 
 class SimulationController extends Controller
 {
-    private const MAX_UPDATE_COUNT = 3;
+    private const MAX_UPDATE_COUNT = 48;
 
     public function __construct(
         private readonly FixtureRepositoryInterface $fixtureRepository,

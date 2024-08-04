@@ -15,7 +15,7 @@ return new class extends Migration
             $table->smallIncrements('id');
             $table->unsignedTinyInteger('team_id');
             $table->unsignedSmallInteger('attack_count');
-            $table->unsignedSmallInteger('total_score');
+            $table->unsignedSmallInteger('score');
 
             $table->foreign('team_id')->references('id')->on('teams');
         });

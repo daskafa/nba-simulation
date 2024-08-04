@@ -69,7 +69,7 @@ class PrepareDataService
             return [
                 'team_id' => $teamId,
                 'attack_count' => $teamData['attackCount'],
-                'total_score' => $teamData['totalScores'],
+                'score' => $teamData['totalScores'],
             ];
         });
     }
@@ -90,13 +90,13 @@ class PrepareDataService
     public function prepareSimulationData(Collection $preparedData, Collection $aggregatedTeamStats): array
     {
         return $preparedData->map(function ($fixture, $key) use ($aggregatedTeamStats) {
-            $totalScore = $aggregatedTeamStats[$key]->total_score ?? 0;
+            $score = $aggregatedTeamStats[$key]->score ?? 0;
             $totalAttackCount = $aggregatedTeamStats[$key]->total_attack_count ?? 0;
 
             return [
                 'team_id' => $key,
                 'attack_count' => $totalAttackCount,
-                'total_scores' => $totalScore,
+                'score' => $score,
                 'detailed' => $fixture['detailed'],
             ];
         })->toArray();
@@ -117,8 +117,8 @@ class PrepareDataService
             $homeTeam = $aggregatedTeamStats->get($fixture->home_team_id);
             $awayTeam = $aggregatedTeamStats->get($fixture->away_team_id);
 
-            $homeScore = $this->scoreService->calculateScore($homeTeam->total_score, $awayTeam->total_score);
-            $awayScore = $this->scoreService->calculateScore($awayTeam->total_score, $homeTeam->total_score);
+            $homeScore = $this->scoreService->calculateScore($homeTeam->score, $awayTeam->score);
+            $awayScore = $this->scoreService->calculateScore($awayTeam->score, $homeTeam->score);
 
             return [
                 'id' => $fixture->id,

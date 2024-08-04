@@ -24,7 +24,7 @@ class AttackService
         $totalTime = self::TOTAL_TIME;
 
         while ($totalTime > 0) {
-            $interval = $this->generateInterval($totalTime); // TODO: 7'nin altında rakam üretiyor, düzeltilecek
+            $interval = $this->generateInterval($totalTime);
             $intervals[] = $interval;
             $totalTime -= $interval;
         }

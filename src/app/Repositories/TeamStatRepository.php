@@ -23,7 +23,7 @@ class TeamStatRepository implements TeamStatRepositoryInterface
     public function getAggregatedTeamStats(): Collection
     {
         return self::query()
-            ->select('team_id', DB::raw('SUM(total_score) as total_score'), DB::raw('SUM(attack_count) as total_attack_count'))
+            ->select('team_id', DB::raw('SUM(score) as score'), DB::raw('SUM(attack_count) as total_attack_count'))
             ->groupBy('team_id')
             ->get()
             ->keyBy('team_id');
