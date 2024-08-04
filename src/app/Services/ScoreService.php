@@ -16,7 +16,7 @@ class ScoreService
     {
         $scores = [];
 
-        for($i = 0; $i < count($teamAttacks); $i++) {
+        for ($i = 0; $i < count($teamAttacks); $i++) {
             match (rand(0, 3)) {
                 2 => $score = 2,
                 3 => $score = 3,

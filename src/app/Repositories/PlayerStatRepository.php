@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class PlayerStatRepository implements PlayerStatRepositoryInterface
 {
-
     public static function query(): Builder
     {
         return PlayerStat::query();

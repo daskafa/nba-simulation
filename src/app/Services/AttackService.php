@@ -39,7 +39,7 @@ class AttackService
 
     public function distributeAttacksToTeamsWithScores(Collection $fixtures): array
     {
-        for($i = 0; $i < count($fixtures); $i++) {
+        for ($i = 0; $i < count($fixtures); $i++) {
             $homeTeam = $fixtures[$i]->homeTeam;
             $awayTeam = $fixtures[$i]->awayTeam;
 

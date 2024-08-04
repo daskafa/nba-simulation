@@ -39,6 +39,5 @@ class RecordService
             ['id'],
             ['home_team_score', 'away_team_score']
         );
-
     }
 }
