@@ -75,8 +75,8 @@ class PrepareDataService
 
     public function mappingForPlayerStats(Collection $record): Collection
     {
-        return $record->map(function ($teamData, $teamId) {
-            return collect($teamData['detailed'])->map(function ($score) use ($teamId) {
+        return $record->map(function ($teamData) {
+            return collect($teamData['detailed'])->map(function ($score) {
                 return [
                     'player_id' => $score['player_id'],
                     'assisted_player_id' => $score['score'] ? $score['assisted_player_id'] : null,
