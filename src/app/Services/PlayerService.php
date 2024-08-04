@@ -19,7 +19,8 @@ class PlayerService
         return [$scorerRandomPlayer, $assistedRandomPlayer];
     }
 
-    public function getRandomPlayer(Team $team): Player {
+    public function getRandomPlayer(Team $team): Player
+    {
         return $team->players->random();
     }
 }

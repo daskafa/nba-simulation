@@ -14,8 +14,7 @@ class RecordService
         private readonly PlayerStatRepositoryInterface $playerStatRepository,
         private readonly FixtureRepositoryInterface $fixtureRepository,
         private readonly PrepareDataService $prepareDataService
-    )
-    {
+    ) {
         //
     }
 

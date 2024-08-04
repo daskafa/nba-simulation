@@ -8,8 +8,7 @@ class PrepareDataService
 {
     public function __construct(
         private readonly ScoreService $scoreService
-    )
-    {
+    ) {
         //
     }
 

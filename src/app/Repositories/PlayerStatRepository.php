@@ -33,7 +33,8 @@ class PlayerStatRepository implements PlayerStatRepositoryInterface
     public function getSuccessRates(): Collection
     {
         return self::query()
-            ->select('player_id',
+            ->select(
+                'player_id',
                 DB::raw('SUM(CASE WHEN score = 2 THEN 1 ELSE 0 END) as score_2_count'),
                 DB::raw('SUM(CASE WHEN score = 3 THEN 1 ELSE 0 END) as score_3_count'),
                 DB::raw('COUNT(*) as total_attempts')

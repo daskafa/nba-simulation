@@ -14,12 +14,12 @@ class AttackService
 
     public function __construct(
         private readonly ScoreService $scoreService
-    )
-    {
+    ) {
         //
     }
 
-    public function generatedAttacksCount(): int {
+    public function generatedAttacksCount(): int
+    {
         $intervals = [];
         $totalTime = self::TOTAL_TIME;
 
@@ -32,11 +32,13 @@ class AttackService
         return count($intervals);
     }
 
-    private function generateInterval(int $totalTime): int {
+    private function generateInterval(int $totalTime): int
+    {
         return min(rand(self::MIN_DURATION, self::MAX_DURATION), $totalTime);
     }
 
-    public function distributeAttacksToTeamsWithScores(Collection $fixtures): array {
+    public function distributeAttacksToTeamsWithScores(Collection $fixtures): array
+    {
         for($i = 0; $i < count($fixtures); $i++) {
             $homeTeam = $fixtures[$i]->homeTeam;
             $awayTeam = $fixtures[$i]->awayTeam;

@@ -14,8 +14,7 @@ class SimulationService
         private readonly RecordService $recordService,
         private readonly TeamStatRepositoryInterface $teamStatRepository,
         private readonly PlayerStatRepositoryInterface $playerStatRepository
-    )
-    {
+    ) {
         //
     }
 

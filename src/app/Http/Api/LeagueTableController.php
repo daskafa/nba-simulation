@@ -11,8 +11,7 @@ class LeagueTableController
     public function __construct(
         private readonly FixtureRepositoryInterface $fixtureRepository,
         private readonly PrepareDataService $prepareDataService
-    )
-    {
+    ) {
         //
     }
 

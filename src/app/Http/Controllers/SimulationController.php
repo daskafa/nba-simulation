@@ -20,8 +20,7 @@ class SimulationController extends Controller
         private readonly SimulationService $simulationService,
         private readonly CacheService $cacheService,
         private readonly RecordService $recordService,
-    )
-    {
+    ) {
         //
     }
 

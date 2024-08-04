@@ -8,12 +8,12 @@ class ScoreService
 {
     public function __construct(
         private readonly PlayerService $playerService
-    )
-    {
+    ) {
         //
     }
 
-    public function determineScores(array $teamAttacks, Team $team): array {
+    public function determineScores(array $teamAttacks, Team $team): array
+    {
         $scores = [];
 
         for($i = 0; $i < count($teamAttacks); $i++) {
