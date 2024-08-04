@@ -51,6 +51,7 @@ class PrepareDataService
     private function prepareDetailedScores(array $scores): array
     {
         $detailed = [];
+
         foreach ($scores as $score) {
             $detailed[] = [
                 'score' => $score['score'],

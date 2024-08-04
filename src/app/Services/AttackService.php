@@ -48,8 +48,8 @@ class AttackService
             [$homeTeamAttacks, $awayTeamAttacks] = $this->teamAttacks();
 
             $results[] = [
-                $homeTeam->id => $this->scoreService->determineScores($homeTeamAttacks, $homeTeam),
-                $awayTeam->id => $this->scoreService->determineScores($awayTeamAttacks, $awayTeam),
+                $homeTeam->id => $this->scoreService->determineScorerAndAssistedPlayers($homeTeamAttacks, $homeTeam),
+                $awayTeam->id => $this->scoreService->determineScorerAndAssistedPlayers($awayTeamAttacks, $awayTeam),
             ];
         }
 

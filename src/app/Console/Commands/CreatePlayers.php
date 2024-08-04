@@ -28,6 +28,7 @@ class CreatePlayers extends Command
     public function handle()
     {
         $preparedPlayers = [];
+
         foreach (Team::all() as $team) {
             $preparedPlayers = $this->preparePlayers($this->getPlayers(), $team, $preparedPlayers);
         }

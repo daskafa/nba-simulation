@@ -22,7 +22,8 @@ class PlayerStatRepository implements PlayerStatRepositoryInterface
 
     public function getTotalAssists(): Collection
     {
-        return self::query()->select('assisted_player_id')
+        return self::query()
+            ->select('assisted_player_id')
             ->whereNotNull('assisted_player_id')
             ->groupBy('assisted_player_id')
             ->selectRaw('assisted_player_id, COUNT(*) as total_assists')

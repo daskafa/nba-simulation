@@ -12,7 +12,7 @@ class ScoreService
         //
     }
 
-    public function determineScores(array $teamAttacks, Team $team): array
+    public function determineScorerAndAssistedPlayers(array $teamAttacks, Team $team): array
     {
         $scores = [];
 
