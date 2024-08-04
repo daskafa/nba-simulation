@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class PrepareSimulation extends Command
 {
@@ -31,6 +32,8 @@ class PrepareSimulation extends Command
             'app:create-players',
             'app:create-fixture',
         ];
+
+        Cache::forget('updateCount');
 
         foreach ($artisanCommands as $command) {
             $this->info("Running command: $command");

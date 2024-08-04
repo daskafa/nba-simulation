@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('team_stats', function (Blueprint $table) {
-            $table->tinyIncrements('id');
+            $table->smallIncrements('id');
             $table->unsignedTinyInteger('team_id');
             $table->unsignedSmallInteger('attack_count');
             $table->unsignedSmallInteger('total_score');

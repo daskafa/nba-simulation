@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Collection;
+
 class PrepareDataService
 {
-    public function prepareData(array $teamScores): array {
+    public function prepareData(array $teamScores): Collection {
         $preparedArray = [];
 
         foreach ($teamScores as $teamScore) {
@@ -17,7 +19,7 @@ class PrepareDataService
             }
         }
 
-        return $preparedArray;
+        return collect($preparedArray);
     }
 
     private function initializeTeamArray(array $scores): array {
@@ -50,20 +52,20 @@ class PrepareDataService
         return $detailed;
     }
 
-    public function mappingForTeamStats(array $record): array
+    public function mappingForTeamStats(Collection $record): Collection
     {
-        return collect($record)->map(function($teamData, $teamId) {
+        return $record->map(function($teamData, $teamId) {
             return [
                 'team_id' => $teamId,
                 'attack_count' => $teamData['attackCount'],
                 'total_score' => $teamData['totalScores'],
             ];
-        })->toArray();
+        });
     }
 
-    public function mappingForPlayerStats(array $record): array
+    public function mappingForPlayerStats(Collection $record): Collection
     {
-        return collect($record)->map(function($teamData, $teamId) {
+        return $record->map(function($teamData, $teamId) {
             return collect($teamData['detailed'])->map(function($score) use ($teamId) {
                 return [
                     'player_id' => $score['player_id'],
@@ -71,6 +73,30 @@ class PrepareDataService
                     'score' => $score['score'],
                 ];
             });
-        })->flatten(1)->toArray();
+        })->flatten(1);
+    }
+
+    public function prepareSimulationData(Collection $preparedData, Collection $aggregatedTeamStats): array
+    {
+        return $preparedData->map(function ($fixture, $key) use ($aggregatedTeamStats) {
+            $totalScore = $aggregatedTeamStats[$key]->total_score ?? 0;
+            $totalAttackCount = $aggregatedTeamStats[$key]->total_attack_count ?? 0;
+
+            return [
+                'team_id' => $key,
+                'attack_count' => $totalAttackCount,
+                'total_scores' => $totalScore,
+                'detailed' => $fixture['detailed'],
+            ];
+        })->toArray();
+    }
+
+    public function prepareSuccessRates(Collection $playerStats): array
+    {
+        return $playerStats->map(function ($row) {
+            $row->success_rate_2 = round($row->score_2_count / $row->total_attempts * 100);
+            $row->success_rate_3 = round($row->score_3_count / $row->total_attempts * 100);
+            return $row;
+        })->toArray();
     }
 }

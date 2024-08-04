@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\PlayerStatRepositoryInterface;
 use App\Interfaces\TeamStatRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class RecordService
 {
@@ -15,9 +16,14 @@ class RecordService
         //
     }
 
-    public function recordAllStats(array $teamStats, array $playerStats): void
+    public function recordAllStats(Collection $teamStats, Collection $playerStats): void
     {
-        $this->teamStatRepository->insert($teamStats);
-        $this->playerStatRepository->insert($playerStats);
+        $this->teamStatRepository->insert(
+            $teamStats->toArray()
+        );
+
+        $this->playerStatRepository->insert(
+            $playerStats->toArray()
+        );
     }
 }
